@@ -1,9 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
-  fetch("http://localhost:8080/api/users")
+  // Use relative URL to avoid CORS
+  fetch("/api/users")
     .then((response) => {
-      if (!response.ok) {
-        throw new Error("Failed to fetch users");
-      }
+      if (!response.ok) throw new Error("Failed to fetch users");
       return response.json();
     })
     .then((users) => {
@@ -11,20 +10,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
       users.forEach((user) => {
         const row = document.createElement("tr");
-
-        const idCell = document.createElement("td");
-        idCell.textContent = user.id;
-
-        const nameCell = document.createElement("td");
-        nameCell.textContent = user.name;
-
-        row.appendChild(idCell);
-        row.appendChild(nameCell);
-
+        row.innerHTML = `<td>${user.id}</td><td>${user.name}</td>`;
         tableBody.appendChild(row);
       });
     })
     .catch((error) => {
       console.error("Error:", error);
+      const tableBody = document.querySelector("#users-table tbody");
+      tableBody.innerHTML = `<tr><td colspan="2">Failed to load users</td></tr>`;
     });
 });
