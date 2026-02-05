@@ -5,10 +5,10 @@ const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Serve static files
+// Serve static files (index.html, index.js)
 app.use(express.static(__dirname));
 
-// Optional CORS (only if frontend is separate)
+// Optional CORS
 app.use(cors());
 
 // API endpoints
@@ -30,10 +30,7 @@ app.get("/api/products", (req, res) => {
   ]);
 });
 
-// Optional fallback for SPA (use /* instead of *)
-app.get("/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
-});
+// No wildcard needed
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
