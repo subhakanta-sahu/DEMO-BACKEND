@@ -1,26 +1,25 @@
 const express = require("express");
 const path = require("path");
-const cors = require("cors"); // optional, in case you serve frontend separately
+const cors = require("cors");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Enable CORS if needed (optional for same origin)
-app.use(cors());
-
-// Serve all static files (index.html + index.js)
+// Serve static files
 app.use(express.static(__dirname));
+
+// Optional CORS (only if frontend is separate)
+app.use(cors());
 
 // API endpoints
 app.get("/api/health", (req, res) => {
-  res.json({ status: "OK", service: "Node + Docker + Railway" });
+  res.json({ status: "OK" });
 });
 
 app.get("/api/users", (req, res) => {
   res.json([
     { id: 1, name: "Alice" },
     { id: 2, name: "Bob" },
-    { id: 3, name: "Charlie" },
   ]);
 });
 
@@ -31,8 +30,8 @@ app.get("/api/products", (req, res) => {
   ]);
 });
 
-// Fallback for any other route
-app.get("*", (req, res) => {
+// Optional fallback for SPA (use /* instead of *)
+app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
