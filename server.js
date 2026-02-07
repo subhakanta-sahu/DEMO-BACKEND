@@ -1,37 +1,32 @@
 const express = require("express");
-const path = require("path");
 const cors = require("cors");
+const pool = require("./db");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Serve static files (index.html, index.js)
+app.use(cors());
+app.use(express.json()); // 🔑 REQUIRED
 app.use(express.static(__dirname));
 
-// Optional CORS
-app.use(cors());
-
-// API endpoints
-app.get("/api/health", (req, res) => {
-  res.json({ status: "OK" });
+// GET users
+app.get("/api/users", async (req, res) => {
+  const result = await pool.query("SELECT * FROM users ORDER BY id DESC");
+  res.json(result.rows);
 });
 
-app.get("/api/users", (req, res) => {
-  res.json([
-    { id: 1, name: "Alice" },
-    { id: 2, name: "Bob" },
-  ]);
-});
+// POST user
+app.post("/api/users", async (req, res) => {
+  const { name, email } = req.body;
 
-app.get("/api/products", (req, res) => {
-  res.json([
-    { id: 101, name: "Laptop", price: 1200 },
-    { id: 102, name: "Keyboard", price: 80 },
-  ]);
-});
+  const result = await pool.query(
+    "INSERT INTO users (name, email) VALUES ($1, $2) RETURNING *",
+    [name, email],
+  );
 
-// No wildcard needed
+  res.json(result.rows[0]);
+});
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Server running on http://localhost:${PORT}`);
 });

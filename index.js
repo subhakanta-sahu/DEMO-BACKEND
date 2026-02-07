@@ -1,22 +1,37 @@
-document.addEventListener("DOMContentLoaded", () => {
-  // Use relative URL to avoid CORS
-  fetch("/api/users")
-    .then((response) => {
-      if (!response.ok) throw new Error("Failed to fetch users");
-      return response.json();
-    })
-    .then((users) => {
-      const tableBody = document.querySelector("#users-table tbody");
+const form = document.getElementById("userForm");
+const usersTable = document.getElementById("users");
 
-      users.forEach((user) => {
-        const row = document.createElement("tr");
-        row.innerHTML = `<td>${user.id}</td><td>${user.name}</td>`;
-        tableBody.appendChild(row);
-      });
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-      const tableBody = document.querySelector("#users-table tbody");
-      tableBody.innerHTML = `<tr><td colspan="2">Failed to load users</td></tr>`;
-    });
+loadUsers();
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+
+  await fetch("/api/users", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, email }),
+  });
+
+  form.reset();
+  loadUsers();
 });
+
+function loadUsers() {
+  fetch("/api/users")
+    .then((res) => res.json())
+    .then((data) => {
+      usersTable.innerHTML = "";
+      data.forEach((u) => {
+        usersTable.innerHTML += `
+          <tr>
+            <td>${u.id}</td>
+            <td>${u.name}</td>
+            <td>${u.email}</td>
+          </tr>
+        `;
+      });
+    });
+}

@@ -1,37 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <title>Users</title>
-  <style>
-    table {
-      border-collapse: collapse;
-      width: 50%;
-      margin-top: 20px;
-    }
-    th, td {
-      border: 1px solid #ccc;
-      padding: 8px;
-      text-align: left;
-    }
-    th {
-      background-color: #f4f4f4;
-    }
-  </style>
+  <title>Postgres User Form</title>
 </head>
 <body>
-  <h1>Users List</h1>
+  <h2>Add User</h2>
 
-  <table id="users-table">
+  <form id="userForm">
+    <input id="name" placeholder="Name" required />
+    <input id="email" type="email" placeholder="Email" required />
+    <button type="submit">Save</button>
+  </form>
+
+  <h2>Users</h2>
+  <table border="1">
     <thead>
       <tr>
-        <th>ID</th>
-        <th>Name</th>
+        <th>ID</th><th>Name</th><th>Email</th>
       </tr>
     </thead>
-    <tbody>
-      <!-- Data will be inserted here -->
-    </tbody>
+    <tbody id="users"></tbody>
   </table>
 
   <script src="index.js"></script>
