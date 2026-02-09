@@ -1,0 +1,66 @@
+# =====================
+# Node dependencies
+# =====================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# =====================
+# Environment variables
+# =====================
+.env
+.env.*
+!.env.example
+
+# =====================
+# Build outputs
+# =====================
+dist/
+build/
+out/
+coverage/
+
+# =====================
+# Logs
+# =====================
+logs/
+*.log
+
+# =====================
+# Runtime data
+# =====================
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# =====================
+# Cache & temp files
+# =====================
+.cache/
+.tmp/
+temp/
+.tmp/
+
+# =====================
+# OS / Editor junk
+# =====================
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# =====================
+# Testing
+# =====================
+.nyc_output/
+coverage/
+
+# =====================
+# Optional: Prisma / DB
+# =====================
+prisma/dev.db
+prisma/*.db
