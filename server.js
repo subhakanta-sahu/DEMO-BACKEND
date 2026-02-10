@@ -21,7 +21,7 @@ connectDB();
 
 // GET users
 app.get("/api/users", async (req, res) => {
-  const result = await pool.query("SELECT * FROM auth_users ORDER BY id DESC");
+  const result = await pool.query("SELECT * FROM users ORDER BY id DESC");
   res.json(result.rows);
 });
 
