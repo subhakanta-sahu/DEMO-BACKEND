@@ -2,6 +2,7 @@ const form = document.getElementById("userForm");
 const usersTable = document.getElementById("users");
 
 loadUsers();
+const API_URL = "https://demo-backend-production-2861.up.railway.app";
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -9,7 +10,7 @@ form.addEventListener("submit", async (e) => {
   const name = document.getElementById("name").value;
   const email = document.getElementById("email").value;
 
-  await fetch("/api/users", {
+  await fetch(`${API_URL}/api/users`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name, email }),
@@ -20,7 +21,7 @@ form.addEventListener("submit", async (e) => {
 });
 
 function loadUsers() {
-  fetch("/api/users")
+  fetch(`${API_URL}/api/users`, { cache: "no-store" })
     .then((res) => res.json())
     .then((data) => {
       usersTable.innerHTML = "";
